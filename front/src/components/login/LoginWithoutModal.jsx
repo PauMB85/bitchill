@@ -164,8 +164,8 @@ function LoginWithoutModal() {
 						<Button
 							onClick={loginWallet}
 							variant='contained'
+							color='primary'
 							sx={{
-								backgroundColor: '#FB8C00',
 								color: '#FFF',
 								borderRadius: '50px',
 							}}
@@ -222,6 +222,7 @@ function LoginWithoutModal() {
 									backgroundColor: '#F7F7F7',
 									color: 'black',
 									borderRadius: '50px',
+									':hover': '#FFB04B',
 								}}
 							>
 								Conectar con Email
