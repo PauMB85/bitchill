@@ -14,7 +14,7 @@ export default function Menu() {
 			<Button component={Link} to='/home'>
 				<Typography>Home</Typography>
 			</Button>
-			<Button component={Link} to='/home'>
+			<Button component={Link} to='/actividad'>
 				<Typography>Actividad</Typography>
 			</Button>
 			<Logout />

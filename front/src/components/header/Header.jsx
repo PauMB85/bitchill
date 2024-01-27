@@ -1,13 +1,16 @@
 import { Card, Stack, Typography } from '@mui/material';
 
+import logo from './../../assets/logo_bi.png';
 export default function Header() {
 	return (
 		<Stack
 			direction={'row'}
 			justifyContent={'space-between'}
-			style={{ marginBottom: '50px' }}
+			style={{ marginBottom: '50px', marginTop: '25px' }}
 		>
-			<div>LOGO</div>
+			<div>
+				<img src={logo} alt='Bit Chill' height={'56px'} />
+			</div>
 			<Card
 				sx={{
 					width: '330px',
