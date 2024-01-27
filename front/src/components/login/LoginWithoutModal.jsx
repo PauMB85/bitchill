@@ -5,13 +5,21 @@ import { CHAIN_NAMESPACES, WALLET_ADAPTERS } from '@web3auth/base';
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
 import { MetamaskAdapter } from '@web3auth/metamask-adapter';
 import { Web3Context } from '../../context/Web3Context';
-
-import Web3 from 'web3';
+import { useNavigate } from 'react-router-dom';
+import {
+	Button,
+	Card,
+	CardActions,
+	CardContent,
+	Stack,
+	TextField,
+	Typography,
+} from '@mui/material';
 
 const clientId = import.meta.env.VITE_CLIENT_ID;
 function LoginWithoutModal() {
-	const { provider, setProvider, web3auth, setWeb3auth } =
-		useContext(Web3Context);
+	const navigateTo = useNavigate();
+	const { setProvider, web3auth, setWeb3auth } = useContext(Web3Context);
 	const [loggedIn, setLoggedIn] = useState(false);
 
 	useEffect(() => {
@@ -68,6 +76,7 @@ function LoginWithoutModal() {
 				setProvider(web3auth.provider);
 				if (web3auth.connected) {
 					setLoggedIn(true);
+					navigateTo('/home');
 				}
 			} catch (error) {
 				console.error(error);
@@ -79,7 +88,7 @@ function LoginWithoutModal() {
 
 	const login = async () => {
 		if (!web3auth) {
-			uiConsole('web3auth not initialized yet');
+			console.error('web3auth not initialized yet');
 			return;
 		}
 		const web3authProvider = await web3auth.connectTo(
@@ -90,13 +99,14 @@ function LoginWithoutModal() {
 		);
 		if (web3auth.connected) {
 			setLoggedIn(true);
+			navigateTo('/home');
 		}
 		setProvider(web3authProvider);
 	};
 
 	const loginWithSMS = async () => {
 		if (!web3auth) {
-			uiConsole('web3auth not initialized yet');
+			console.error('web3auth not initialized yet');
 			return;
 		}
 		const web3authProvider = await web3auth.connectTo(
@@ -110,13 +120,14 @@ function LoginWithoutModal() {
 		);
 		if (web3auth.connected) {
 			setLoggedIn(true);
+			navigateTo('/home');
 		}
 		setProvider(web3authProvider);
 	};
 
 	const loginWithEmail = async () => {
 		if (!web3auth) {
-			uiConsole('web3auth not initialized yet');
+			console.error('web3auth not initialized yet');
 			return;
 		}
 		const web3authProvider = await web3auth.connectTo(
@@ -130,6 +141,7 @@ function LoginWithoutModal() {
 		);
 		if (web3auth.connected) {
 			setLoggedIn(true);
+			navigateTo('/home');
 		}
 		setProvider(web3authProvider);
 	};
@@ -139,131 +151,93 @@ function LoginWithoutModal() {
 		setProvider(web3authProvider);
 		if (web3auth.connected) {
 			setLoggedIn(true);
+			navigateTo('/home');
 		}
 	};
-
-	const authenticateUser = async () => {
-		if (!web3auth) {
-			uiConsole('web3auth not initialized yet');
-			return;
-		}
-		const idToken = await web3auth.authenticateUser();
-		uiConsole(idToken);
-	};
-
-	const getUserInfo = async () => {
-		if (!web3auth) {
-			uiConsole('web3auth not initialized yet');
-			return;
-		}
-		const user = await web3auth.getUserInfo();
-		uiConsole(user);
-	};
-
-	const logout = async () => {
-		if (!web3auth) {
-			uiConsole('web3auth not initialized yet');
-			return;
-		}
-		await web3auth.logout();
-		setProvider(null);
-		setLoggedIn(false);
-	};
-
-	const getAccounts = async () => {
-		if (!provider) {
-			uiConsole('provider not initialized yet');
-			return;
-		}
-		const web3 = new Web3(provider);
-
-		// Get user's Ethereum public address
-		const address = await web3.eth.getAccounts();
-		uiConsole(address);
-	};
-
-	const getBalance = async () => {
-		if (!provider) {
-			uiConsole('provider not initialized yet');
-			return;
-		}
-		const web3 = new Web3(provider);
-
-		// Get user's Ethereum public address
-		const address = (await web3.eth.getAccounts())[0];
-
-		// Get user's balance in ether
-		const balance = web3.utils.fromWei(
-			await web3.eth.getBalance(address), // Balance is in wei
-			'ether'
-		);
-		uiConsole(balance);
-	};
-
-	function uiConsole(...args) {
-		const el = document.querySelector('#console>p');
-		if (el) {
-			el.innerHTML = JSON.stringify(args || {}, null, 2);
-		}
-	}
-
-	const loggedInView = (
-		<>
-			<div className='flex-container'>
-				<div>
-					<button onClick={getUserInfo} className='card'>
-						Get User Info
-					</button>
-				</div>
-				<div>
-					<button onClick={authenticateUser} className='card'>
-						Get ID Token
-					</button>
-				</div>
-				<div>
-					<button onClick={getAccounts} className='card'>
-						Get Accounts
-					</button>
-				</div>
-				<div>
-					<button onClick={getBalance} className='card'>
-						Get Balance
-					</button>
-				</div>
-				<div>
-					<button onClick={logout} className='card'>
-						Log Out
-					</button>
-				</div>
-			</div>
-			<div id='console' style={{ whiteSpace: 'pre-line' }}>
-				<p style={{ whiteSpace: 'pre-line' }}>Logged in Successfully!</p>
-			</div>
-		</>
-	);
-
-	const unloggedInView = (
-		<>
-			<button onClick={login} className='card'>
-				Google
-			</button>
-			<button onClick={loginWithSMS} className='card'>
-				SMS Login (e.g +cc-number)
-			</button>
-			<button onClick={loginWithEmail} className='card'>
-				Email Login (e.g pau)
-			</button>
-			<button onClick={loginWallet} className='card'>
-				Connect with your wallet
-			</button>
-		</>
-	);
 
 	return (
-		<div className='container'>
-			<h1 className='title'>ReactJS RSK</h1>
-			<div className='grid'>{loggedIn ? loggedInView : unloggedInView}</div>
-		</div>
+		<Stack direction={'column'} sx={{ marginTop: '15px' }}>
+			<Typography>Iniciar sesión</Typography>
+			<Card
+				sx={{
+					maxWidth: 300,
+					display: 'flex',
+					justifyContent: 'center',
+					padding: '10px',
+				}}
+			>
+				<CardActions>
+					<Stack spacing={2}>
+						<Button
+							onClick={loginWallet}
+							variant='contained'
+							sx={{
+								backgroundColor: '#FB8C00',
+								color: '#FFF',
+								borderRadius: '50px',
+							}}
+						>
+							Conectar con wallet
+						</Button>
+						<Button
+							onClick={login}
+							variant='contained'
+							sx={{
+								backgroundColor: '#F7F7F7',
+								color: 'black',
+								borderRadius: '50px',
+							}}
+						>
+							Conectar con Google
+						</Button>
+
+						<form onSubmit={loginWithSMS}>
+							<TextField
+								placeholder='+34-123456789'
+								type='text'
+								name='phone'
+								sx={{ marginTop: '5px', marginBottom: '5px' }}
+								fullWidth
+							/>
+							<Button
+								type='submit'
+								variant='contained'
+								fullWidth
+								sx={{
+									backgroundColor: '#F7F7F7',
+									color: 'black',
+									borderRadius: '50px',
+								}}
+							>
+								Conectar con Teléfono
+							</Button>
+						</form>
+
+						<form onSubmit={loginWithEmail}>
+							<TextField
+								placeholder='name@mail.com'
+								type='email'
+								name='email'
+								sx={{ marginTop: '5px', marginBottom: '5px' }}
+								fullWidth
+							/>
+							<Button
+								type='submit'
+								variant='contained'
+								fullWidth
+								sx={{
+									backgroundColor: '#F7F7F7',
+									color: 'black',
+									borderRadius: '50px',
+								}}
+							>
+								Conectar con Email
+							</Button>
+						</form>
+					</Stack>
+				</CardActions>
+			</Card>
+		</Stack>
 	);
 }
 
