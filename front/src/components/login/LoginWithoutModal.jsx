@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { Web3AuthNoModal } from '@web3auth/no-modal';
 import { EthereumPrivateKeyProvider } from '@web3auth/ethereum-provider';
 import { CHAIN_NAMESPACES, WALLET_ADAPTERS } from '@web3auth/base';
@@ -10,7 +10,6 @@ import {
 	Button,
 	Card,
 	CardActions,
-	CardContent,
 	Stack,
 	TextField,
 	Typography,
@@ -20,7 +19,6 @@ const clientId = import.meta.env.VITE_CLIENT_ID;
 function LoginWithoutModal() {
 	const navigateTo = useNavigate();
 	const { setProvider, web3auth, setWeb3auth } = useContext(Web3Context);
-	const [loggedIn, setLoggedIn] = useState(false);
 
 	useEffect(() => {
 		const init = async () => {
@@ -75,7 +73,6 @@ function LoginWithoutModal() {
 				await web3auth.init();
 				setProvider(web3auth.provider);
 				if (web3auth.connected) {
-					setLoggedIn(true);
 					navigateTo('/home');
 				}
 			} catch (error) {
@@ -98,7 +95,6 @@ function LoginWithoutModal() {
 			}
 		);
 		if (web3auth.connected) {
-			setLoggedIn(true);
 			navigateTo('/home');
 		}
 		setProvider(web3authProvider);
@@ -119,7 +115,6 @@ function LoginWithoutModal() {
 			}
 		);
 		if (web3auth.connected) {
-			setLoggedIn(true);
 			navigateTo('/home');
 		}
 		setProvider(web3authProvider);
@@ -140,7 +135,6 @@ function LoginWithoutModal() {
 			}
 		);
 		if (web3auth.connected) {
-			setLoggedIn(true);
 			navigateTo('/home');
 		}
 		setProvider(web3authProvider);
@@ -150,7 +144,6 @@ function LoginWithoutModal() {
 		const web3authProvider = await web3auth.connectTo(WALLET_ADAPTERS.METAMASK);
 		setProvider(web3authProvider);
 		if (web3auth.connected) {
-			setLoggedIn(true);
 			navigateTo('/home');
 		}
 	};
