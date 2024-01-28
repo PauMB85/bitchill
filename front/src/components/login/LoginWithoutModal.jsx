@@ -25,12 +25,12 @@ function LoginWithoutModal() {
 			try {
 				const chainConfig = {
 					chainId: '0x1F',
-					rpcTarget: 'https://public-node.testnet.rsk.co',
+					rpcTarget: 'https://go.getblock.io/ce13cd1a9cfb494e819effc0f8c15d3f',
 					chainNamespace: CHAIN_NAMESPACES.EIP155,
 					displayName: 'RSK Testnet',
 					ticker: 'tRBTC',
 					tickerName: 'RSK Testnet',
-					blockExplorer: 'https://explorer.testnet.rsk.co',
+					blockExplorer: 'https://rootstock-testnet.blockscout.com/',
 				};
 				const web3auth = new Web3AuthNoModal({
 					clientId,
@@ -100,17 +100,20 @@ function LoginWithoutModal() {
 		setProvider(web3authProvider);
 	};
 
-	const loginWithSMS = async () => {
+	const loginWithSMS = async event => {
+		event.preventDefault();
 		if (!web3auth) {
 			console.error('web3auth not initialized yet');
 			return;
 		}
+		const form = new FormData(event.target);
+		const tlf = form.get('phone');
 		const web3authProvider = await web3auth.connectTo(
 			WALLET_ADAPTERS.OPENLOGIN,
 			{
 				loginProvider: 'sms_passwordless',
 				extraLoginOptions: {
-					login_hint: '+34-687925363',
+					login_hint: `+34-${tlf}`,
 				},
 			}
 		);
@@ -120,17 +123,20 @@ function LoginWithoutModal() {
 		setProvider(web3authProvider);
 	};
 
-	const loginWithEmail = async () => {
+	const loginWithEmail = async event => {
+		event.preventDefault();
 		if (!web3auth) {
 			console.error('web3auth not initialized yet');
 			return;
 		}
+		const form = new FormData(event.target);
+		const email = form.get('email');
 		const web3authProvider = await web3auth.connectTo(
 			WALLET_ADAPTERS.OPENLOGIN,
 			{
 				loginProvider: 'email_passwordless',
 				extraLoginOptions: {
-					login_hint: 'paumb85@gmail.com',
+					login_hint: email,
 				},
 			}
 		);
