@@ -1,6 +1,7 @@
 import {
 	Button,
 	Card,
+	CircularProgress,
 	Divider,
 	FormControl,
 	InputAdornment,
@@ -13,10 +14,11 @@ import { useContext, useState } from 'react';
 import Web3 from 'web3';
 import { Web3Context } from '../../context/Web3Context';
 import useGetAccount from './../../hooks/web3/useGetAccount';
-import { ABI_APPROVE } from './ABI_APPROVE';
+import { ABI_APPROVE, ABI_DCA } from './ABI_APPROVE';
+import { ethers } from 'ethers';
 
 import { listaCantidad, listaDuracion, listaFrequencia } from './utils-dca';
-const DCA_ADDRESS = '0x4a11508fdc0763c3408425d0b3779f36cdd967e7';
+const DCA_ADDRESS = '0xa62e8b6c4cdfae3d9c580a7d53e079f37daccff9';
 const WALLET_APPROVE = '0xcb46c0ddc60d18efeb0e586c17af6ea36452dae0';
 const DCAFrom = () => {
 	const { account } = useGetAccount();
@@ -26,47 +28,50 @@ const DCAFrom = () => {
 
 	const { provider } = useContext(Web3Context);
 
+	const [isLoading, setIsLoading] = useState(false);
+	const [txPosition, setTxPosition] = useState(null);
+
 	const deposit = async () => {
+		setIsLoading(true);
+		setTxPosition(null);
+		await window.ethereum.request({ method: 'eth_requestAccounts' });
+		const provider = new ethers.providers.Web3Provider(window.ethereum);
+		const signer = provider.getSigner();
+
+		// Direcciones del contrato del token y del contrato al que se le dará la aprobación
+		const tokenContract = new ethers.Contract(
+			WALLET_APPROVE,
+			ABI_APPROVE,
+			signer
+		);
+		const dcaContract = new ethers.Contract(DCA_ADDRESS, ABI_DCA, signer);
+		const cantidadTotal = cantidad * frequencia * duracion;
+
+		const amount = ethers.utils.parseUnits(cantidadTotal.toString(), 18); // Asegúrate de usar la cantidad correcta de decimales
 		try {
-			// paso 1 -APRROVE
-			/* const tokenContract = new ethers.Contract(
-				WALLET_APPROVE,
-				ABI_APPROVE,
-				account
-			);
-			const cantidadTotal = cantidad * frequencia * duracion;
-			const amount = ethers.parseUnits(cantidadTotal.toString(), 18);
+			// Llamar a la función approve del contrato
 			const tx = await tokenContract.approve(DCA_ADDRESS, amount);
-			console.log(tx);
-			*/
-			// paso 1 - APPROVE
-			const web3 = new Web3(provider);
-			const approve = new web3.eth.Contract(ABI_APPROVE, WALLET_APPROVE);
-			const cantidadTotal = cantidad * frequencia * duracion;
-			const amount = web3.utils.toWei(cantidadTotal, 'ether');
-			const tx = await approve.methods.approve(DCA_ADDRESS, amount).send({
-				from: account,
-				gas: '65164',
-				gasPrice: '65164',
-			});
-			/* const gasPrice = await approve.methods
-				.approve(DCA_ADDRESS, amount)
-				.estimateGas();
-			const tx = await approve.methods.approve(DCA_ADDRESS, amount).send({
-				from: account,
-				gasPrice,
-				gas: '65164',
-			}); */
-			console.log(tx);
-			/* .on('transactionHash', console.log)
-				.on('receipt', _ => console.log('end'))
-				//.then(console.log)
-				.catch(console.error)
-				.finally(() => {
-					console.log('yep');
-				}); */
-		} catch (err) {
-			console.error('error', err);
+			const approveTx = await tx.wait();
+
+			console.log(
+				`Approved ${ethers.utils.formatUnits(
+					amount,
+					18
+				)} tokens for the spender contract`
+			);
+			const txCreatePosition = await dcaContract.createPosition(
+				WALLET_APPROVE,
+				amount,
+				cantidad,
+				frequencia
+			);
+			await txCreatePosition.wait();
+			console.log(txCreatePosition);
+			setTxPosition(txCreatePosition);
+		} catch (error) {
+			console.error('Error sending transaction:', error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 	return (
@@ -133,13 +138,17 @@ const DCAFrom = () => {
 				</Stack>
 			</Card>
 			<div style={{ marginTop: '34px' }}>
-				<Button
-					variant='contained'
-					sx={{ width: '281px', height: '61px' }}
-					onClick={deposit}
-				>
-					Depositar
-				</Button>
+				{isLoading ? (
+					<CircularProgress />
+				) : (
+					<Button
+						variant='contained'
+						sx={{ width: '281px', height: '61px' }}
+						onClick={deposit}
+					>
+						Depositar
+					</Button>
+				)}
 			</div>
 		</div>
 	);
