@@ -136,7 +136,7 @@ const DCAFrom = () => {
 							DOC a despositar: {cantidad * frequencia * duracion} $
 						</Typography>
 					</div>
-					<di>
+					<div>
 						{!isLoading && txPosition && (
 							<Link
 								to={`https://explorer.testnet.rsk.co/tx/${txPosition.hash}`}
@@ -144,7 +144,7 @@ const DCAFrom = () => {
 								Revisa la transacción
 							</Link>
 						)}
-					</di>
+					</div>
 				</Stack>
 			</Card>
 			<div style={{ marginTop: '34px' }}>
