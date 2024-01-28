@@ -28,8 +28,8 @@ export default function Header() {
 					style={{ height: '100%' }}
 				>
 					<Stack direction={'column'}>
-						<Typography variant='body-1'>Balance USD</Typography>
-						<Typography variant='h6'>{balance}</Typography>
+						<Typography variant='body-1'>Saldo DOC</Typography>
+						<Typography variant='h6'>{Number(balance).toFixed(2)}</Typography>
 					</Stack>
 					<Stack direction={'column'}>
 						<Typography variant='body-1'>Billetera</Typography>

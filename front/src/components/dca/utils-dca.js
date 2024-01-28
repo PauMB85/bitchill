@@ -1,15 +1,15 @@
 export const listaCantidad = [
 	{
 		value: 50,
-		label: '50 USD',
+		label: '50 DOC',
 	},
 	{
 		value: 100,
-		label: '100 USD',
+		label: '100 DOC',
 	},
 	{
 		value: 200,
-		label: '200 USD',
+		label: '200 DOC',
 	},
 ];
 

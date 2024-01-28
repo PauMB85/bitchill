@@ -12,10 +12,10 @@ export default function Menu() {
 			}}
 		>
 			<Button component={Link} to='/home'>
-				<Typography>Home</Typography>
+				<Typography sx={{ color: 'black' }}>Inicio</Typography>
 			</Button>
 			<Button component={Link} to='/actividad'>
-				<Typography>Actividad</Typography>
+				<Typography sx={{ color: 'black' }}>Actividad</Typography>
 			</Button>
 			<Logout />
 		</aside>

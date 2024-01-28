@@ -79,7 +79,7 @@ const DCAFrom = () => {
 			}}
 		>
 			<Typography variant='h5' sx={{ margin: '14px' }}>
-				Elige tu ahorro periódico
+				Configura tu ahorro periódico
 			</Typography>
 			<Card
 				sx={{
@@ -90,7 +90,7 @@ const DCAFrom = () => {
 					backgroundColor: '#F7F7F7',
 				}}
 			>
-				<Typography>Cantidad periódica (USD)</Typography>
+				<Typography variant='h6'>Cantidad periódica (DOC)</Typography>
 
 				<Stack direction={'column'} spacing={3}>
 					<FormControl fullWidth sx={{ m: 1 }}>
@@ -127,7 +127,7 @@ const DCAFrom = () => {
 					<Divider />
 					<div>
 						<Typography variant='h5'>
-							Resultado a despositar: {cantidad * frequencia * duracion} USD
+							DOC a despositar: {cantidad * frequencia * duracion} $
 						</Typography>
 					</div>
 				</Stack>

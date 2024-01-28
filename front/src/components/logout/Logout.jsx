@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { Web3Context } from '../../context/Web3Context';
 import { useNavigate } from 'react-router-dom';
@@ -20,5 +20,9 @@ export default function Logout() {
 
 		navigateTo('/landing');
 	};
-	return <Button onClick={logout}>Logout</Button>;
+	return (
+		<Button onClick={logout} sx={{ color: 'black' }}>
+			<Typography>Desconectar</Typography>
+		</Button>
+	);
 }
