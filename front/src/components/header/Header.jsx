@@ -1,8 +1,8 @@
 import { Card, Stack, Typography } from '@mui/material';
 
-import logo from './../../assets/logo_bi.png';
 import useGetAccount from '../../hooks/web3/useGetAccount';
 import useGetBalance from '../../hooks/web3/useGetBalance';
+import Logo from '../logo/Logo';
 export default function Header() {
 	const { account, accountReduce } = useGetAccount();
 	const { balance } = useGetBalance(account);
@@ -12,9 +12,7 @@ export default function Header() {
 			justifyContent={'space-between'}
 			style={{ marginBottom: '50px', marginTop: '25px' }}
 		>
-			<div>
-				<img src={logo} alt='Bit Chill' height={'56px'} />
-			</div>
+			<Logo />
 			<Card
 				sx={{
 					width: '330px',
