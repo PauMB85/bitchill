@@ -149,7 +149,11 @@ function LoginWithoutModal() {
 	};
 
 	return (
-		<Stack direction={'column'} sx={{ marginTop: '15px' }}>
+		<Stack
+			direction={'column'}
+			alignItems={'center'}
+			sx={{ marginTop: '15px' }}
+		>
 			<Typography>Iniciar sesión</Typography>
 			<Card
 				sx={{
@@ -157,6 +161,7 @@ function LoginWithoutModal() {
 					display: 'flex',
 					justifyContent: 'center',
 					padding: '10px',
+					marginTop: '15px',
 				}}
 			>
 				<CardActions>

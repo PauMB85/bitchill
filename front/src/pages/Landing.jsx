@@ -8,14 +8,14 @@ export default function Landing() {
 		<Stack
 			direction='row'
 			justifyContent='center'
-			alignItems='center'
+			alignItems='flex-start'
 			spacing={2}
-			sx={{ height: '100vh' }}
+			sx={{ minHeight: '100vh', marginTop: '25px' }}
 		>
 			<Stack
 				direction='column'
 				justifyContent='space-evenly'
-				spacing={2}
+				spacing={4}
 				sx={{ height: '100%' }}
 			>
 				<TitleLanding />
