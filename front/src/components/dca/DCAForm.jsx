@@ -18,6 +18,7 @@ import { ABI_APPROVE, ABI_DCA } from './ABI_APPROVE';
 import { ethers } from 'ethers';
 
 import { listaCantidad, listaDuracion, listaFrequencia } from './utils-dca';
+import { Link } from 'react-router-dom';
 const DCA_ADDRESS = '0xa62e8b6c4cdfae3d9c580a7d53e079f37daccff9';
 const WALLET_APPROVE = '0xcb46c0ddc60d18efeb0e586c17af6ea36452dae0';
 const DCAFrom = () => {
@@ -135,6 +136,15 @@ const DCAFrom = () => {
 							DOC a despositar: {cantidad * frequencia * duracion} $
 						</Typography>
 					</div>
+					<di>
+						{!isLoading && txPosition && (
+							<Link
+								to={`https://explorer.testnet.rsk.co/tx/${txPosition.hash}`}
+							>
+								Revisa la transacción
+							</Link>
+						)}
+					</di>
 				</Stack>
 			</Card>
 			<div style={{ marginTop: '34px' }}>
