@@ -12,11 +12,12 @@ export default function Logout() {
 		}
 		try {
 			await web3auth.logout();
+			setProvider(null);
+			setWeb3auth(null);
 		} catch (err) {
 			console.error(err);
 		}
-		setProvider(null);
-		setWeb3auth(null);
+
 		navigateTo('/landing');
 	};
 	return <Button onClick={logout}>Logout</Button>;
