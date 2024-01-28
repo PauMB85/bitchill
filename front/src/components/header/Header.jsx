@@ -1,7 +1,11 @@
 import { Card, Stack, Typography } from '@mui/material';
 
 import logo from './../../assets/logo_bi.png';
+import useGetAccount from '../../hooks/web3/useGetAccount';
+import useGetBalance from '../../hooks/web3/useGetBalance';
 export default function Header() {
+	const { account, accountReduce } = useGetAccount();
+	const { balance } = useGetBalance(account);
 	return (
 		<Stack
 			direction={'row'}
@@ -27,11 +31,13 @@ export default function Header() {
 				>
 					<Stack direction={'column'}>
 						<Typography variant='body-1'>Balance USD</Typography>
-						<Typography variant='h6'>5000</Typography>
+						<Typography variant='h6'>{balance}</Typography>
 					</Stack>
 					<Stack direction={'column'}>
 						<Typography variant='body-1'>Billetera</Typography>
-						<Typography variant='h6'>0x098...087</Typography>
+						<Typography variant='h6'>
+							{accountReduce ?? 'Loading...'}
+						</Typography>
 					</Stack>
 				</Stack>
 			</Card>
