@@ -15,6 +15,8 @@ import { Web3Context } from '../../context/Web3Context';
 import useGetAccount from './../../hooks/web3/useGetAccount';
 import { ABI_APPROVE } from './ABI_APPROVE';
 
+import { ethers } from 'ethers';
+
 import { listaCantidad, listaDuracion, listaFrequencia } from './utils-dca';
 const DCA_ADDRESS = '0x4a11508fdc0763c3408425d0b3779f36cdd967e7';
 const WALLET_APPROVE = '0xcb46c0ddc60d18efeb0e586c17af6ea36452dae0';
@@ -28,25 +30,35 @@ const DCAFrom = () => {
 
 	const deposit = async () => {
 		try {
+			// paso 1 -APRROVE
+			/* const tokenContract = new ethers.Contract(
+				WALLET_APPROVE,
+				ABI_APPROVE,
+				account
+			);
+			const cantidadTotal = cantidad * frequencia * duracion;
+			const amount = ethers.parseUnits(cantidadTotal.toString(), 18);
+			const tx = await tokenContract.approve(DCA_ADDRESS, amount);
+			console.log(tx);
+			*/
 			// paso 1 - APPROVE
-
 			const web3 = new Web3(provider);
 			const approve = new web3.eth.Contract(ABI_APPROVE, WALLET_APPROVE);
 			const cantidadTotal = cantidad * frequencia * duracion;
 			const amount = web3.utils.toWei(cantidadTotal, 'ether');
-			/*const tx = await approve.methods.approve(DCA_ADDRESS, amount).send({
+			const tx = await approve.methods.approve(DCA_ADDRESS, amount).send({
 				from: account,
 				gas: '65164',
 				gasPrice: '65164',
-			});*/
-			const gasPrice = await approve.methods
+			});
+			/* const gasPrice = await approve.methods
 				.approve(DCA_ADDRESS, amount)
 				.estimateGas();
 			const tx = await approve.methods.approve(DCA_ADDRESS, amount).send({
 				from: account,
 				gasPrice,
 				gas: '65164',
-			});
+			}); */
 			console.log(tx);
 			/* .on('transactionHash', console.log)
 				.on('receipt', _ => console.log('end'))

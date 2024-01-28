@@ -25,12 +25,12 @@ function LoginWithoutModal() {
 			try {
 				const chainConfig = {
 					chainId: '0x1F',
-					rpcTarget: 'https://go.getblock.io/ce13cd1a9cfb494e819effc0f8c15d3f',
+					rpcTarget: 'https://public-node.testnet.rsk.co',
 					chainNamespace: CHAIN_NAMESPACES.EIP155,
 					displayName: 'RSK Testnet',
 					ticker: 'tRBTC',
 					tickerName: 'RSK Testnet',
-					blockExplorer: 'https://rootstock-testnet.blockscout.com/',
+					blockExplorer: 'https://explorer.testnet.rsk.co',
 				};
 				const web3auth = new Web3AuthNoModal({
 					clientId,
