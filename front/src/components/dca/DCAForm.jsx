@@ -15,8 +15,6 @@ import { Web3Context } from '../../context/Web3Context';
 import useGetAccount from './../../hooks/web3/useGetAccount';
 import { ABI_APPROVE } from './ABI_APPROVE';
 
-import { ethers } from 'ethers';
-
 import { listaCantidad, listaDuracion, listaFrequencia } from './utils-dca';
 const DCA_ADDRESS = '0x4a11508fdc0763c3408425d0b3779f36cdd967e7';
 const WALLET_APPROVE = '0xcb46c0ddc60d18efeb0e586c17af6ea36452dae0';
