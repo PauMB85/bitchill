@@ -35,6 +35,10 @@ const DCAFrom = () => {
 	const deposit = async () => {
 		setIsLoading(true);
 		setTxPosition(null);
+
+		/**
+		 * use ethers to sign...
+		 */
 		await window.ethereum.request({ method: 'eth_requestAccounts' });
 		const provider = new ethers.providers.Web3Provider(window.ethereum);
 		const signer = provider.getSigner();
@@ -69,6 +73,30 @@ const DCAFrom = () => {
 			await txCreatePosition.wait();
 			console.log(txCreatePosition);
 			setTxPosition(txCreatePosition);
+
+			/**
+			 * Con web3 no funcionaba la lectur
+			 */
+			// paso 1 - APPROVE
+
+			/* const web3 = new Web3(provider);
+			debugger;
+			const approve = new web3.eth.Contract(ABI_APPROVE, WALLET_APPROVE);
+			const cantidadTotal = cantidad * frequencia * duracion;
+			const amount = web3.utils.toWei(cantidadTotal, 'ether');
+			/*const tx = await approve.methods.approve(DCA_ADDRESS, amount).send({
+				from: account,
+				gas: '65164',
+				gasPrice: '65164',
+			}); */
+			/* const gasPrice = await approve.methods
+				.approve(DCA_ADDRESS, amount)
+				.estimateGas();
+			const tx = await approve.methods.approve(DCA_ADDRESS, amount).send({
+				from: account,
+				gasPrice,
+			});
+			console.log(tx); */
 		} catch (error) {
 			console.error('Error sending transaction:', error);
 		} finally {
