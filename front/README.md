@@ -1,8 +1,23 @@
-# React + Vite
+# BitChill - front
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Instalacion
 
-Currently, two official plugins are available:
+```bash
+npm install
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Arrancar proyecto
+
+crear fichero .env e incluir
+
+```bash
+VITE_API_ADDRESS_SM_HELLO_WORLD=ADDRESS_SMART_CONTRACT_HELLO_WORLD
+VITE_API_NODE_ENDPOINT=URL_NODE_LOCAL
+VITE_API_BACKEND_ENDPOINT=ULR_BACKEND
+
+VITE_CLIENT_ID=ID_WEB3_AUTH
+```
+
+```bash
+npm run dev
+```
