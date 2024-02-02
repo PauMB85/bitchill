@@ -39,9 +39,10 @@ const DCAFrom = () => {
 		/**
 		 * use ethers to sign...
 		 */
-		await window.ethereum.request({ method: 'eth_requestAccounts' });
-		const provider = new ethers.providers.Web3Provider(window.ethereum);
-		const signer = provider.getSigner();
+		// await window.ethereum.request({ method: 'eth_requestAccounts' });
+		const provider3 = new ethers.providers.Web3Provider(provider);
+		// debugger;
+		const signer = provider3.getSigner();
 
 		// Direcciones del contrato del token y del contrato al que se le dará la aprobación
 		const tokenContract = new ethers.Contract(
