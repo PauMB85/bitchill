@@ -168,6 +168,8 @@ const DCAFrom = () => {
 						{!isLoading && txPosition && (
 							<Link
 								to={`https://explorer.testnet.rsk.co/tx/${txPosition.hash}`}
+								target={'_blank'}
+								rel={'noopener noreferrer'}
 							>
 								Revisa la transacción
 							</Link>
